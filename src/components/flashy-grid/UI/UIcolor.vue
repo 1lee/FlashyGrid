@@ -6,14 +6,15 @@
           <div class="input-group-sm mb-3">
             <input
               type="text"
-              class="form-control"
+              class="form-control jscolor"
               v-model="inputColor"
               placeholder="Select Color"
               aria-label="Select color"
               aria-describedby="button-addon4"
-              @keydown.enter="addColors(availableColors, inputColor)"
+              @keydown.enter="addColors(availableColors, $event)"
               @keyup.enter="inputColor = ''"
               @input="changeColors"
+              onkeypress="return false;"
             >
           </div>
         </div>
@@ -38,6 +39,7 @@
               class="badge badge-pill badge-light"
               v-for="(color, i) in availableColors"
               :key="i"
+              :style="{backgroundColor: color}"
               @click="removeColor(availableColors, i)"
               @input="changeColors"
             >{{ color }}</li>
@@ -60,9 +62,11 @@ export default {
     };
   },
   methods: {
-    addColors(list, inputColor) {
-      list.push(inputColor);
-      inputColor = "";
+    addColors(list, event) {
+      this.inputColor = "#" + event.target.value;
+      list.push(this.inputColor);
+
+      this.changeColors();
     },
     removeColor(list, index) {
       list.splice(index, 1);

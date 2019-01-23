@@ -13,6 +13,14 @@
         v-if="blocks.length > 1"
         :style="[{'transition': transitionRate + 's'}, blockBorderRadius, {'transform': 'skew(' + gridData.matrix.skewX + 'deg, ' + gridData.matrix.skewY + 'deg)'}, border]"
       ></li>
+
+      <li class="itemOverlay" style="{position: absolute}">
+        <svg width="0" height="0">
+          <defs>
+            <clipPath id="myClip"></clipPath>
+          </defs>
+        </svg>
+      </li>
       <!-- END block -->
     </ul>
 
@@ -62,6 +70,7 @@ export default {
         ],
         inputBorderColor: "",
         availableBorderColors: ["white"],
+        availableShapes: [],
         borderSize: 0,
         borderColor: "",
         borderStyle: "none",
@@ -194,12 +203,16 @@ export default {
         let randomBorderColor = Math.floor(
           Math.random() * this.gridData.availableBorderColors.length
         );
+        let randomShapes = Math.floor(
+          Math.random() * this.gridData.availableShapes.length
+        );
         domElement.style.backgroundColor = this.gridData.availableColors[
           randomColor
         ];
         domElement.style.borderColor = this.gridData.availableBorderColors[
           randomBorderColor
         ];
+        domElement.style.clipPath = this.gridData.availableShapes[randomShapes];
       }
     },
     timer(speed) {
@@ -243,6 +256,10 @@ export default {
       this.gridData.borderSize = data.borderSize;
       this.gridData.availableBorderColors = data.availableBorderColors;
       this.gridData.radius = data.radius;
+    });
+
+    eventBus.$on("shapeWasChanged", data => {
+      this.gridData.availableShapes = data.availableShapes;
     });
 
     eventBus.$on("opacityOrPerspectiveChanged", data => {

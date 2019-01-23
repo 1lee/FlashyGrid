@@ -44,14 +44,15 @@
           <div class="input-group-sm mb-3">
             <input
               type="text"
-              class="form-control"
+              class="form-control jscolor"
               v-model="inputBorderColor"
               placeholder="Select Border Color"
               aria-label="Select color"
               aria-describedby="button-addon4"
-              @keydown.enter="addColors(availableBorderColors,inputBorderColor)"
+              @keydown.enter="addColors(availableBorderColors, $event)"
               @keyup.enter="inputBorderColor = ''"
               @input="changeBorder"
+              onkeypress="return false;"
             >
           </div>
         </div>
@@ -76,6 +77,7 @@
               class="badge badge-pill badge-light"
               v-for="(color, index) in availableBorderColors"
               :key="index"
+              :style="{backgroundColor: color}"
               @click="removeColor(availableBorderColors, index)"
             >{{ color }}</li>
           </ul>
@@ -99,9 +101,11 @@ export default {
     };
   },
   methods: {
-    addColors(list, inputColor) {
-      list.push(inputColor);
-      inputColor = "";
+    addColors(list, event) {
+      this.inputBorderColor = "#" + event.target.value;
+      list.push(this.inputBorderColor);
+
+      this.changeBorder();
     },
     removeColor(list, index) {
       list.splice(index, 1);

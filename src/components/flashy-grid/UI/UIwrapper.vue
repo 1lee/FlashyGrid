@@ -10,6 +10,8 @@
 
     <ui-border class="border flush-left-column"></ui-border>
 
+    <ui-shapes class="shapes flush-left-column"></ui-shapes>
+
     <ui-footer class="footer flush-left-column"></ui-footer>
 
     <ui-export-button class="ui-export-button flush-left-column"></ui-export-button>
@@ -22,6 +24,7 @@ import UIrates from "./UIrates";
 import UIgaps from "./UIgaps";
 import UIcolor from "./UIcolor";
 import UIborder from "./UIborder";
+import UIshapes from "./UIshapes";
 import UIfooter from "./UIfooter";
 import UIExportButton from "./UIexportButton";
 
@@ -32,6 +35,7 @@ export default {
     "ui-gaps": UIgaps,
     "ui-color": UIcolor,
     "ui-border": UIborder,
+    "ui-shapes": UIshapes,
     "ui-footer": UIfooter,
     "ui-export-button": UIExportButton
   }
