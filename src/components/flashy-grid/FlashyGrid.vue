@@ -12,16 +12,14 @@
         :key="blocks.indexOf(unit)"
         v-if="blocks.length > 1"
         :style="[{'transition': transitionRate + 's'}, blockBorderRadius, {'transform': 'skew(' + gridData.matrix.skewX + 'deg, ' + gridData.matrix.skewY + 'deg)'}, border]"
-      ></li>
-
-      <li class="itemOverlay" style="{position: absolute}">
+      >
         <svg width="0" height="0">
           <defs>
             <clipPath id="myClip"></clipPath>
           </defs>
         </svg>
       </li>
-      <!-- END block -->
+      <!-- END block-->
     </ul>
 
     <ps-u-i></ps-u-i>
@@ -153,6 +151,9 @@ export default {
     }
   },
   watch: {
+    timer: function resetTimer() {
+      this.timer(0);
+    },
     "gridData.stopAll": function reset() {
       this.gridData.stopAll = true;
     },
@@ -170,9 +171,9 @@ export default {
         this.blocks.push("block");
       }
     },
-    transitionRate: function newTransitionRate() {
-      this.timer(this.updatedSpeed);
-    },
+    //transitionRate: function newTransitionRate() {
+    // this.timer(this.updatedSpeed);
+    // },
     codeBoxVisible: function exportCss() {
       let dynamicCss = document.getElementById("thegrid").style.cssText;
       this.gridCss = dynamicCss;
@@ -219,6 +220,7 @@ export default {
       this.gridData.stopAll = false;
       let blinker = setInterval(() => {
         this.cycleElements(speed, this.getDivs());
+        console.log(this.updatedSpeed);
       }, this.updatedSpeed);
     },
     gridSizer(size) {

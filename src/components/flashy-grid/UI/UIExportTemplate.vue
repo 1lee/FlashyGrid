@@ -34,6 +34,7 @@
       isOn: true,
       availableColors: {{ gridData.availableColors}},
       availableBorderColors: {{ gridData.availableBorderColors}},
+      availableShapes: {{ gridData.availableShapes}},
       updatedSpeed: {{ updatedSpeed }},
       columns: "{{ gridData.columns }}",
       rows: "{{ gridData.rows }}",
@@ -50,7 +51,13 @@
       xRotation: {{ gridData.xRotation }},
       zRotation: {{ gridData.zRotation }},
       opacitySetting: {{ gridData.opacitySetting || 1 }},
-      template: ` &lt;ul id="thegrid" class="grid-container"> &lt;li class="item trans" v-for="block in blocks" :key="blocks.indexOf(block)" v-if="blocks.length > 1" :style="[{borderSize: borderSize}, {borderStyle: borderStyle}, {borderRadius: radius + '%'}, {'transition': transitionRate + 's'}, {'transform': 'skew(' + matrix.skewX + 'deg, ' + matrix.skewY + 'deg)'}]" >&lt;/li> &lt;/ul> `
+      template: ` &lt;ul id="thegrid" class="grid-container"> &lt;li class="item trans" v-for="block in blocks" :key="blocks.indexOf(block)" v-if="blocks.length > 1" :style="[{borderSize: borderSize}, {borderStyle: borderStyle}, {borderRadius: radius + '%'}, {'transition': transitionRate + 's'}, {'transform': 'skew(' + matrix.skewX + 'deg, ' + matrix.skewY + 'deg)'}]" >
+      &lt;svg width="0" height="0">
+      &lt;defs>
+      &lt;clipPath id="myClip">&lt;/clipPath>
+      &lt;/defs>
+      &lt;/svg>
+      &lt;/li> &lt;/ul> `
       },
       methods: {
       getDivs() {
@@ -73,10 +80,16 @@
       let randomBorderColor = Math.floor(
       Math.random() * this.availableBorderColors.length
       );
-      domElement.style.backgroundColor = this.availableColors[randomColor];
+      let randomShapes = Math.floor(
+      Math.random() * this.availableShapes.length
+      );
+      domElement.style.backgroundColor = this.availableColors[
+      randomColor
+      ];
       domElement.style.borderColor = this.availableBorderColors[
       randomBorderColor
       ];
+      domElement.style.clipPath = this.availableShapes[randomShapes];
       }
       },
       timer(speed) {

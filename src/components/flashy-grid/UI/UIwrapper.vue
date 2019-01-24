@@ -1,20 +1,36 @@
 <template>
-  <div class="theUi">
-    <ui-dimensions class="dimensions flush-left-column"></ui-dimensions>
+  <div>
+    <div class="export-button">
+      <div class="row show-button" v-show="visible">
+        <div class="col-4">
+          <button class="btn btn-primary btn-light btn-xl" @click="UIoff()">Hide</button>
+        </div>
+      </div>
 
-    <ui-rates class="rates flush-left-column"></ui-rates>
+      <div class="row show-button" v-show="!visible">
+        <div class="col-4">
+          <button class="btn btn-primary btn-light btn-xl" @click="UIon()">Show</button>
+        </div>
+      </div>
+    </div>
 
-    <ui-gaps class="gaps flush-left-column"></ui-gaps>
+    <div class="theUi" v-show="visible">
+      <ui-dimensions class="dimensions flush-left-column"></ui-dimensions>
 
-    <ui-color class="color flush-left-column"></ui-color>
+      <ui-rates class="rates flush-left-column"></ui-rates>
 
-    <ui-border class="border flush-left-column"></ui-border>
+      <ui-gaps class="gaps flush-left-column"></ui-gaps>
 
-    <ui-shapes class="shapes flush-left-column"></ui-shapes>
+      <ui-color class="color flush-left-column"></ui-color>
 
-    <ui-footer class="footer flush-left-column"></ui-footer>
+      <ui-border class="flush-left-column"></ui-border>
 
-    <ui-export-button class="ui-export-button flush-left-column"></ui-export-button>
+      <ui-shapes class="shapes flush-left-column"></ui-shapes>
+
+      <ui-footer class="footer flush-left-column"></ui-footer>
+
+      <ui-export-button class="ui-export-button flush-left-column"></ui-export-button>
+    </div>
   </div>
 </template>
 
@@ -38,11 +54,30 @@ export default {
     "ui-shapes": UIshapes,
     "ui-footer": UIfooter,
     "ui-export-button": UIExportButton
+  },
+  data() {
+    return {
+      visible: true
+    };
+  },
+  methods: {
+    UIon() {
+      this.visible = true;
+    },
+    UIoff() {
+      this.visible = false;
+    }
   }
 };
 </script>
 
 <style scoped>
+.show-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
 .theUi {
   margin-top: 0px;
   padding-top: 20px;

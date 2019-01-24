@@ -2,7 +2,7 @@
   <div>
     <div class="control-panel container">
       <div class="row">
-        <div class="col-9">
+        <div class="col-6">
           <div class="input-group-sm mb-3">
             <input
               type="text"

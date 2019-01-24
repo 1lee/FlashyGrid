@@ -2,7 +2,7 @@
   <div>
     <div class="control-panel container">
       <div class="row">
-        <div class="col-3">
+        <div class="col-2">
           <h6 class="text-white">X - Gap</h6>
           <input
             class="xGap"
@@ -16,21 +16,21 @@
           >
         </div>
 
-        <div class="col-3">
+        <div class="col-2">
           <h6 class="text-white">Y - Gap</h6>
           <input
             class="yGap"
             type="range"
             min="0"
-            max="99"
-            step="1"
+            max="21"
+            step="0.25"
             value="yGap"
             v-model="yGap"
             @input="changeGap"
           >
         </div>
-
-        <div class="col-3">
+        <div class="col-2"></div>
+        <div class="col-2">
           <h6 class="text-white">Skew X</h6>
           <input
             class="xSkewSlider"
@@ -43,7 +43,7 @@
             @input="changeSkew"
           >
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <h6 class="text-white">Skew Y</h6>
           <input
             class="ySkewSlider"

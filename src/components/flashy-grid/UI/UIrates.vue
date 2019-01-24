@@ -3,12 +3,15 @@
     <div class="control-panel container">
       <div class="row">
         <div class="col-3">
-          <h6 class="text-white">Blink Rate</h6>
+          <h6 class="text-white">
+            Blink Rate:
+            <span class="text-danger">{{ blinkRate | formatBlinkRate }}</span>
+          </h6>
           <input
             class="reverseSlider text-white"
             type="range"
             min="100"
-            max="1000"
+            max="3000"
             step="10"
             value="blinkSpeed"
             v-model="blinkRate"
@@ -16,7 +19,9 @@
           >
         </div>
         <div class="col-3">
-          <h6 class="text-white">Transition</h6>
+          <h6 class="text-white">Transition:
+            <span class="text-danger">{{ transitionRate + "s"}}</span>
+          </h6>
           <input
             class="transitionRate reverseSlider text-white"
             type="range"
@@ -49,6 +54,12 @@ export default {
         blinkRate: this.blinkRate,
         transitionRate: this.transitionRate
       });
+    }
+  },
+  filters: {
+    formatBlinkRate: function(value) {
+      value *= 0.001;
+      return value.toFixed(1) + "s";
     }
   }
 };

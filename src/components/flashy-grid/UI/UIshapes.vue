@@ -2,7 +2,7 @@
   <div>
     <div class="control-panel container">
       <div class="row">
-        <div class="col-9">
+        <div class="col-6">
           <div class="input-group-sm mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Shapes</label>
@@ -99,7 +99,7 @@ export default {
         "left chevron":
           "polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)",
         "right chevron":
-          "polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)",
+          "polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%)",
         star:
           "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
         cross:
@@ -136,6 +136,9 @@ export default {
       eventBus.$emit("shapeWasChanged", {
         availableShapes: this.availableShapes
       });
+    },
+    changeRate() {
+      eventBus.$emit("ratesWereChanged");
     }
   },
   watch: {
@@ -150,6 +153,7 @@ export default {
         let unsetIndex = this.availableShapes.indexOf("unset");
         this.availableShapes.splice(unsetIndex, 1);
         this.changeShape();
+        this.changeRate();
       }
     }
   }
