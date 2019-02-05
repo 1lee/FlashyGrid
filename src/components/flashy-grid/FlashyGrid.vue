@@ -94,7 +94,8 @@ export default {
       updatedSpeed: 1000,
       transitionRate: 0.5,
       gridCss: "",
-      codeBoxVisible: false
+      codeBoxVisible: false,
+      initializedData: {}
     };
   },
   filters: {

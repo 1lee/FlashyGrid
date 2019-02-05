@@ -1,5 +1,18 @@
 <template>
-  <div>
+  <div class="interface">
+    <div class="control-toggles">
+      <button type="button" class="btn btn-secondary btn-sm" @click="toggleRates()">Rates</button>
+      <button type="button" class="btn btn-secondary btn-sm" @click="toggleGaps()">Gaps</button>
+      <button type="button" class="btn btn-secondary btn-sm" @click="toggleColor()">Color</button>
+      <button type="button" class="btn btn-secondary btn-sm" @click="toggleBorder()">Border</button>
+      <button type="button" class="btn btn-secondary btn-sm" @click="toggleShapes()">Shapes</button>
+      <button
+        type="button"
+        class="btn btn-secondary btn-sm"
+        @click="togglePerspective()"
+      >Perspective</button>
+    </div>
+
     <div class="export-button">
       <div class="row show-button" v-show="visible">
         <div class="col-4">
@@ -17,17 +30,17 @@
     <div class="theUi" v-show="visible">
       <ui-dimensions class="dimensions flush-left-column"></ui-dimensions>
 
-      <ui-rates class="rates flush-left-column"></ui-rates>
+      <ui-rates class="rates flush-left-column" v-show="ratesVisible"></ui-rates>
 
-      <ui-gaps class="gaps flush-left-column"></ui-gaps>
+      <ui-gaps class="gaps flush-left-column" v-show="gapsVisible"></ui-gaps>
 
-      <ui-color class="color flush-left-column"></ui-color>
+      <ui-color class="color flush-left-column" v-show="colorVisible"></ui-color>
 
-      <ui-border class="flush-left-column"></ui-border>
+      <ui-border class="flush-left-column" v-show="borderVisible"></ui-border>
 
-      <ui-shapes class="shapes flush-left-column"></ui-shapes>
+      <ui-shapes class="shapes flush-left-column" v-show="shapesVisible"></ui-shapes>
 
-      <ui-footer class="footer flush-left-column"></ui-footer>
+      <ui-footer class="footer flush-left-column" v-show="perspectiveVisible"></ui-footer>
 
       <ui-export-button class="ui-export-button flush-left-column"></ui-export-button>
     </div>
@@ -57,7 +70,13 @@ export default {
   },
   data() {
     return {
-      visible: true
+      visible: true,
+      ratesVisible: true,
+      gapsVisible: true,
+      colorVisible: true,
+      borderVisible: true,
+      shapesVisible: true,
+      perspectiveVisible: true
     };
   },
   methods: {
@@ -66,12 +85,34 @@ export default {
     },
     UIoff() {
       this.visible = false;
+    },
+    toggleRates() {
+      this.ratesVisible = !this.ratesVisible;
+    },
+    toggleGaps() {
+      this.gapsVisible = !this.gapsVisible;
+    },
+    toggleColor() {
+      this.colorVisible = !this.colorVisible;
+    },
+    toggleBorder() {
+      this.borderVisible = !this.borderVisible;
+    },
+    toggleShapes() {
+      this.shapesVisible = !this.shapesVisible;
+    },
+    togglePerspective() {
+      this.perspectiveVisible = !this.perspectiveVisible;
     }
   }
 };
 </script>
 
 <style scoped>
+.control-toggles {
+  display: none;
+}
+
 .show-button {
   position: fixed;
   top: 20px;
@@ -93,5 +134,10 @@ export default {
 }
 .rates {
   grid-row: dimension-rate-line / 2;
+}
+@media (max-width: 768px) {
+  .control-toggles {
+    display: inline;
+  }
 }
 </style>

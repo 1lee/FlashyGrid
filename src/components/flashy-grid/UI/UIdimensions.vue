@@ -7,7 +7,7 @@
           <input
             type="number"
             name="quantity"
-            step="2"
+            step="1"
             min="2"
             max="24"
             v-model="gridDimensions"
@@ -38,6 +38,9 @@
             @input="changeDimensions"
           >
         </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-danger btn-sm" @click="reset()">Reset</button>
+        </div>
       </div>
     </div>
   </div>
@@ -56,6 +59,12 @@ export default {
     };
   },
   methods: {
+    reset() {
+      this.gridDimensions = 1;
+      this.gridHeight = 100;
+      this.gridWidth = 100;
+      this.changeDimensions();
+    },
     changeDimensions() {
       eventBus.$emit("dimensionsWereChanged", {
         gridSize: this.gridDimensions,
