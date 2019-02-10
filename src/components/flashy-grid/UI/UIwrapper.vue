@@ -28,7 +28,7 @@
     </div>
 
     <div class="theUi" v-show="visible">
-      <ui-dimensions class="dimensions flush-left-column"></ui-dimensions>
+      <ui-dimensions ref="dimensionsRef" class="dimensions flush-left-column"></ui-dimensions>
 
       <ui-rates class="rates flush-left-column" v-show="ratesVisible"></ui-rates>
 
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+
 import UIdimensions from "./UIdimensions";
 import UIrates from "./UIrates";
 import UIgaps from "./UIgaps";
@@ -68,6 +69,7 @@ export default {
     "ui-footer": UIfooter,
     "ui-export-button": UIExportButton
   },
+  props: ["gridReset"],
   data() {
     return {
       visible: true,
@@ -78,6 +80,11 @@ export default {
       shapesVisible: true,
       perspectiveVisible: true
     };
+  },
+  watch: {
+    gridReset: function pushChanges(){
+      $refs.dimensionsRef.initializeDimensions();
+    }
   },
   methods: {
     UIon() {
@@ -115,7 +122,7 @@ export default {
 
 .show-button {
   position: fixed;
-  top: 20px;
+  bottom: 60px;
   right: 20px;
 }
 

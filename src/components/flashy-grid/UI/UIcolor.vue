@@ -14,7 +14,6 @@
               @keydown.enter="addColors(availableColors, $event)"
               @keyup.enter="inputColor = ''"
               @input="changeColors"
-              onkeypress="return false;"
             >
           </div>
         </div>

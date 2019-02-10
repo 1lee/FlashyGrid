@@ -1,5 +1,9 @@
 <template>
   <div id="element">
+    <div class="splash" v-if="modalOpen">
+      <splash v-if="!splashLoadedAlready"></splash>
+      
+    </div>
     <div class="canvas"></div>
     <ul
       id="thegrid"
@@ -22,8 +26,14 @@
       <!-- END block-->
     </ul>
 
-    <ps-u-i></ps-u-i>
+    <ps-u-i :key="componentResetKey"></ps-u-i>
     <!---------------------------------------------------------------------------------------------------------->
+          <div class="row reset-button">
+        <div class="col-4">
+          <button class="btn btn-danger btn-xl" @click="resetGrid()">Reset</button>
+        </div>
+      </div>
+    
     <div v-if="codeBoxVisible">
       <export-template
         :gridCss="gridCss"
@@ -39,6 +49,9 @@
 <script>
 import { eventBus } from "../../main.js";
 import { dataBus } from "./busMethods.js";
+import { initialData } from "../initialData.js";
+
+import Splash from './Splash.vue';
 
 import psUI from "./UI/UIwrapper";
 
@@ -46,6 +59,7 @@ import UIExportTemplate from "./UI/UIExportTemplate";
 
 export default {
   components: {
+    Splash,
     psUI,
     exportTemplate: UIExportTemplate
   },
@@ -88,14 +102,59 @@ export default {
           scaleY: 0,
           translateX: 0,
           translateY: 0
-        }
+        },
+        
       },
+      initialData: {
+        gridSize: 1,
+        height: 100,
+        width: 100,
+        columns: "repeat(10, 1fr)",
+        rows: "repeat(10, 1fr)",
+        isOn: false,
+        availableColors: [
+          "red",
+          "purple",
+          "black",
+          "white",
+          "magenta",
+          "orange"
+        ],
+        inputBorderColor: "",
+        availableBorderColors: ["white"],
+        availableShapes: [],
+        borderSize: 0,
+        borderColor: "",
+        borderStyle: "none",
+        stopAll: false,
+        xGap: 0,
+        yGap: 0,
+        radius: 0,
+        opacitySetting: 1,
+        perspectiveValue: 0,
+        xRotation: 0,
+        yRotation: 0,
+        zRotation: 0,
+        matrix: {
+          scaleX: 0,
+          skewX: 0,
+          skewY: 0,
+          scaleY: 0,
+          translateX: 0,
+          translateY: 0
+        },
+        
+      },
+      modalOpen: true,
+      splashLoadedAlready: false,
       blocks: ["block"],
       updatedSpeed: 1000,
       transitionRate: 0.5,
       gridCss: "",
       codeBoxVisible: false,
-      initializedData: {}
+      initializedData: {},
+      componentResetKey: 0
+
     };
   },
   filters: {
@@ -152,6 +211,10 @@ export default {
     }
   },
   watch: {
+    componentResetKey: function resetData() {
+
+        location.reload();
+    },
     timer: function resetTimer() {
       this.timer(0);
     },
@@ -185,6 +248,9 @@ export default {
       this.isOn = false;
       this.gridData.stopAll = true;
     },
+       resetGrid(){
+      this.componentResetKey += 1; 
+       },
     getDivs() {
       return document.querySelectorAll(".grid-container > li");
     },
@@ -221,7 +287,6 @@ export default {
       this.gridData.stopAll = false;
       let blinker = setInterval(() => {
         this.cycleElements(speed, this.getDivs());
-        console.log(this.updatedSpeed);
       }, this.updatedSpeed);
     },
     gridSizer(size) {
@@ -230,6 +295,12 @@ export default {
     }
   },
   created() {
+    this.initializedData = initialData;
+
+
+eventBus.$on("modalClosed", data => {
+  this.modalOpen = data.modalOpen;
+});
     eventBus.$on("dimensionsWereChanged", data => {
       this.gridData.gridSize = data.gridSize;
       this.gridData.height = data.height;
@@ -277,11 +348,13 @@ export default {
       this.codeBoxVisible = data.codeBoxVisible;
       this.dataRefreshed = true;
     });
+
   },
   beforeMount() {
     this.isOn = true;
     this.stopAll = false;
     this.timer(this.updatedSpeed);
+
   }
 };
 </script>
@@ -309,5 +382,10 @@ export default {
 }
 .item {
   background-color: rgba(255, 255, 255, 0.4);
+}
+.reset-button {
+    position: fixed;
+  top: 20px;
+  right: 20px;
 }
 </style>

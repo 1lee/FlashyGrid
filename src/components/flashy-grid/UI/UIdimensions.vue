@@ -38,9 +38,6 @@
             @input="changeDimensions"
           >
         </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-danger btn-sm" @click="reset()">Reset</button>
-        </div>
       </div>
     </div>
   </div>
@@ -59,19 +56,24 @@ export default {
     };
   },
   methods: {
-    reset() {
-      this.gridDimensions = 1;
-      this.gridHeight = 100;
-      this.gridWidth = 100;
-      this.changeDimensions();
-    },
     changeDimensions() {
       eventBus.$emit("dimensionsWereChanged", {
         gridSize: this.gridDimensions,
         height: this.gridHeight,
         width: this.gridWidth
       });
-    }
+    },
+    initializeDimensions() {
+      this.gridDimensions = 1;
+      this.gridHeight = 100;
+      this.gridWidth = 100;
+
+      eventBus.$emit("dimensionsWereChanged", {
+        gridSize: this.gridDimensions,
+        height: this.gridHeight,
+        width: this.gridWidth
+      });
+  }
   }
 };
 </script>
